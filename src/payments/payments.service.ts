@@ -128,8 +128,15 @@ export class PaymentsService {
           name: productName,
           quantity,
           date: i.travelDate
-            ? new Date(i.travelDate).toISOString().slice(0, 10)
+            ? new Date(i.travelDate)
+                .toLocaleDateString('es-PE', {
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit',
+                })
+                .replace(/\//g, '-')
             : '',
+
           unitPrice: i.unitPrice ?? i.totalPrice / quantity,
           totalPrice: i.totalPrice ?? (i.unitPrice ?? 0) * quantity,
         };
